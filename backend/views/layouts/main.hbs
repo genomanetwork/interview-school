@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang={{{shortenLocale locale}}}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="stylesheet" type="text/css" href="/{{animateStyles}}" />
+  <link rel="stylesheet" href="/{{appStyles}}" />
+  <title>{{title}}</title>
+</head>
+<body class={{viewName}}>
+    {{{body}}}
+  <script id="script-loader">window.__INITIAL_STATE__ = {{{stringifyState initialState}}}</script>
+  <script src="/{{bundleApp}}"></script>
+  {{#if googleAnalyticsId}}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{googleAnalyticsId}}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', "{{googleAnalyticsId}}");
+    </script>
+  {{/if}}
+</body>
+</html>

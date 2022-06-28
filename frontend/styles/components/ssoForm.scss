@@ -1,0 +1,56 @@
+.sso-form {
+  display: flex;
+  justify-content: space-between;
+  height: 460px;
+  width: 50%;
+  border: 1px solid $border-color;
+  border-radius: 6px;
+  margin-top: 10%;
+
+  &__letfside, &__rightside {
+    display: flex;
+    justify-content: center;
+    width: calc(50% - 120px);
+    overflow: hidden;
+    padding: 60px;
+  }
+
+  &__letfside {
+    border-right: 1px solid $border-color;
+  }
+
+  & .signup-form, & .login-form {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: 100%;
+
+    &__label {
+      font-size: 20px;
+      font-weight: 600;
+      color: $label-color;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    &__field {
+      width: 100%;
+      margin-bottom: 20px;
+      border: 0;
+      border-bottom: 1px solid $border-color;
+      padding: 10px 0;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    &__button-container {
+      display: flex;
+      bottom: 0;
+      position: absolute;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+}
