@@ -4,8 +4,9 @@ import getScheduleConflicts from '../../../utils/getScheduleConflicts';
 
 const ObjectId = require('mongoose').Types.ObjectId;
 
-export async function getSections(userId) {
+export async function getSections(userId, enrolled = false) {
   const queryResult = await Sections.aggregate([
+    {$match: enrolled ? {students: ObjectId(userId)} : {}},
     {$sort: {'audit.creationDate': 1}},
     {$lookup:{
       from:'users',
@@ -40,6 +41,11 @@ export async function getSections(userId) {
   ]);
 
   const enrolledAt = queryResult.filter(section => section.enrolled);
+
+  if (enrolled) {
+    return enrolledAt;
+  }
+
   const conflictIds = getScheduleConflicts(queryResult,enrolledAt);
   const sections = queryResult.map(section => {
     section['conflict'] = conflictIds.indexOf(section._id) > -1;
@@ -48,6 +54,7 @@ export async function getSections(userId) {
 
   return sections;
 }
+
 
 export async function enroll(userId, sectionId) {
   return await Sections.findOneAndUpdate({_id: ObjectId(sectionId)},{

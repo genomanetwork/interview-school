@@ -1,0 +1,19 @@
+.footer {
+  position: absolute;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 20px;
+  border: 0;
+  border-top: solid 1px $border-color;
+
+  &__btn-container {
+    width: 20%;
+    margin: auto;
+
+    & .btn {
+      margin-bottom: 20px;
+    }
+  }
+}

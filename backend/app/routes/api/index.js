@@ -1,13 +1,19 @@
 'use strict';
 import express from 'express';
+import fs from 'fs';
 import {
   signup,
   login,
 } from '../../controllers/user';
 import {
   enroll,
-  unroll
+  unroll,
+  getSections
 } from '../../controllers/sections';
+import {
+  printPDF
+} from '../../controllers/pdf-maker';
+import sessionRequired from '../../../middlewares/sessionRequired';
 
 
 /* eslint new-cap:0 */
@@ -86,8 +92,25 @@ router.post('/unroll', async (req, res) => {
 
 router.get('/logout', (req, res) => {
   req.session.destroy();
-  return res.redirect('/');
+  return res.status(200).end('success');
 });
+
+
+router.get('/printUserSchedule', sessionRequired, async (req, res) => {
+  const {userId} = req.session;
+  const userSections = await getSections(userId, true);
+
+  const documentPath = await printPDF(userId, userSections);
+
+  return res.status(200).end(documentPath);
+});
+
+/* router.get('/downloadUserSchedule', sessionRequired, (req, res) => {
+  const {userId} = req.session;
+  const file = `${process.cwd()}/backend/public/docs/${userId}/mySchedule.pdf`;
+  return res.download(file);
+}); */
+
 
 
 module.exports = router;
